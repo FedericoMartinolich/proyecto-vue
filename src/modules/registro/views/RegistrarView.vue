@@ -4,33 +4,36 @@
         <Form :validation-schema="schema" @submit="onSubmit">
             <div class="form">
                 <label for="nombre">Nombre:</label>
-                <Field type="text" name="nombre" placeholder="ingrese su nombre"/>
+                <Field type="text" name="nombre" placeholder="Ingrese su nombre"/>
                 <ErrorMessage name="nombre"></ErrorMessage>
             </div>
             <div class="form">
                 <label for="correo">Correo:</label>
-                <Field type="email" name="email" placeholder="ingrese su email"/>
+                <Field type="email" name="email" placeholder="Ingrese su email"/>
                 <ErrorMessage name="email"></ErrorMessage>
             </div>
             <div class="form">
-                <label for="nombre">Nombre:</label>
-            <button type="submit">Registrar</button>
+                <button type="submit">Registrar</button>
             </div>            
         </Form>
     </div>
 </template>
 
 <script setup>
-    import {Form, Field, ErrorMessage} from 'vee-validate'
-    import {schema} from '../schemas/validationSchema'
+import { Form, Field, ErrorMessage } from 'vee-validate';
+import { schema } from '../schemas/validationSchema';
+import { useRegistrarStore } from '../stores/registrarStore';
 
-    const onSubmit = () => {
-        console.log('Se ha enviado el form correctamente');
-    }
+const registrarStore = useRegistrarStore();
+
+const onSubmit = (values) => {
+    registrarStore.guardarRegistro(values.nombre, values.email);
+    console.log('Se ha enviado el formulario correctamente:', values);
+};
 </script>
 
 <style scoped>
-    .form{
-        margin-bottom: 10px;
-    }
+.form {
+    margin-bottom: 10px;
+}
 </style>
